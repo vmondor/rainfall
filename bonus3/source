@@ -1,0 +1,281 @@
+#include "out.h"
+
+
+
+int _init(EVP_PKEY_CTX *ctx)
+
+{
+  int iVar1;
+  
+  __gmon_start__();
+  frame_dummy();
+  iVar1 = __do_global_ctors_aux();
+  return iVar1;
+}
+
+
+
+void FUN_080483a0(void)
+
+{
+  (*(code *)(undefined *)0x0)();
+  return;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+int strcmp(char *__s1,char *__s2)
+
+{
+  int iVar1;
+  
+  iVar1 = strcmp(__s1,__s2);
+  return iVar1;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+int fclose(FILE *__stream)
+
+{
+  int iVar1;
+  
+  iVar1 = fclose(__stream);
+  return iVar1;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+size_t fread(void *__ptr,size_t __size,size_t __n,FILE *__stream)
+
+{
+  size_t sVar1;
+  
+  sVar1 = fread(__ptr,__size,__n,__stream);
+  return sVar1;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+int puts(char *__s)
+
+{
+  int iVar1;
+  
+  iVar1 = puts(__s);
+  return iVar1;
+}
+
+
+
+void __gmon_start__(void)
+
+{
+  __gmon_start__();
+  return;
+}
+
+
+
+void __libc_start_main(void)
+
+{
+  __libc_start_main();
+  return;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+FILE * fopen(char *__filename,char *__modes)
+
+{
+  FILE *pFVar1;
+  
+  pFVar1 = fopen(__filename,__modes);
+  return pFVar1;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+int execl(char *__path,char *__arg,...)
+
+{
+  int iVar1;
+  
+  iVar1 = execl(__path,__arg);
+  return iVar1;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+int atoi(char *__nptr)
+
+{
+  int iVar1;
+  
+  iVar1 = atoi(__nptr);
+  return iVar1;
+}
+
+
+
+void processEntry _start(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined1 auStack_4 [4];
+  
+  __libc_start_main(main,param_2,&stack0x00000004,__libc_csu_init,__libc_csu_fini,param_1,auStack_4)
+  ;
+  do {
+                    // WARNING: Do nothing block with infinite loop
+  } while( true );
+}
+
+
+
+// WARNING: Removing unreachable block (ram,0x0804849a)
+// WARNING: Removing unreachable block (ram,0x080484a0)
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_6159 == '\0') {
+    completed_6159 = '\x01';
+  }
+  return;
+}
+
+
+
+// WARNING: Removing unreachable block (ram,0x080484e8)
+
+void frame_dummy(void)
+
+{
+  return;
+}
+
+
+
+undefined4 main(int param_1,int param_2)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  char *pcVar3;
+  byte bVar4;
+  char local_98 [65];
+  undefined1 local_57;
+  char local_56 [66];
+  FILE *local_14;
+  
+  bVar4 = 0;
+  local_14 = fopen("/home/user/end/.pass","r");
+  pcVar3 = local_98;
+  for (iVar2 = 0x21; iVar2 != 0; iVar2 = iVar2 + -1) {
+    pcVar3[0] = '\0';
+    pcVar3[1] = '\0';
+    pcVar3[2] = '\0';
+    pcVar3[3] = '\0';
+    pcVar3 = pcVar3 + ((uint)bVar4 * -2 + 1) * 4;
+  }
+  if ((local_14 == (FILE *)0x0) || (param_1 != 2)) {
+    uVar1 = 0xffffffff;
+  }
+  else {
+    fread(local_98,1,0x42,local_14);
+    local_57 = 0;
+    iVar2 = atoi(*(char **)(param_2 + 4));
+    local_98[iVar2] = '\0';
+    fread(local_56,1,0x41,local_14);
+    fclose(local_14);
+    iVar2 = strcmp(local_98,*(char **)(param_2 + 4));
+    if (iVar2 == 0) {
+      execl("/bin/sh","sh",0);
+    }
+    else {
+      puts(local_56);
+    }
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
+
+
+// WARNING: Function: __i686.get_pc_thunk.bx replaced with injection: get_pc_thunk_bx
+// WARNING: Removing unreachable block (ram,0x08048650)
+// WARNING: Removing unreachable block (ram,0x08048658)
+
+void __libc_csu_init(void)
+
+{
+  EVP_PKEY_CTX *in_stack_ffffffd4;
+  
+  _init(in_stack_ffffffd4);
+  return;
+}
+
+
+
+void __libc_csu_fini(void)
+
+{
+  return;
+}
+
+
+
+// WARNING: This is an inlined function
+
+void __i686_get_pc_thunk_bx(void)
+
+{
+  return;
+}
+
+
+
+void __do_global_ctors_aux(void)
+
+{
+  code *pcVar1;
+  int *piVar2;
+  
+  if (__CTOR_LIST__ != (code *)0xffffffff) {
+    piVar2 = (int *)&__CTOR_LIST__;
+    pcVar1 = __CTOR_LIST__;
+    do {
+      piVar2 = piVar2 + -1;
+      (*pcVar1)();
+      pcVar1 = (code *)*piVar2;
+    } while (pcVar1 != (code *)0xffffffff);
+  }
+  return;
+}
+
+
+
+void _fini(void)
+
+{
+  __do_global_dtors_aux();
+  return;
+}
+
+
+

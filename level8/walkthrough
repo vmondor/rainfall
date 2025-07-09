@@ -1,0 +1,10 @@
+level8 : 5684af5cb4c8679958be4abe6373147ab52d95768e047820bf382e44fa8d8fb9
+Process:
+    - ./level8
+    - auth test
+    - service AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    - we can see that the service address is 16 bits away from the auth address
+    - when we fill the service variable, it overwrites the auth variable,
+      which makes auth[32] != 0
+    - login
+    - get the flag : c542e581c5ba5162a85f767996e3247ed619ef6c6f7b76a59435545dc6259f8a

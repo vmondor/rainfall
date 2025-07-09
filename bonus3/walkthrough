@@ -1,0 +1,12 @@
+bonus3 : 71d449df0f960b36e0055eb58c14d0f5d0ddc0b35328d657f91cf0df15910587
+Process:
+    - ./bonus3 --> does nothing
+    - ./bonus3 aaaa --> prints an empty line
+    - In the source file, we see that atoi() is called on our parameter
+    - We also see that the shell is executed if iVar2 == 0
+    - If we put an empty string as a parameter, atoi() returns 0.
+    - iVar2 is the result of strcmp(local_98, param2)
+    - So we must put an empty string as a parameter for strcmp to return 0.
+    - ./bonus3 ''
+    - cat /home/user/end/.pass
+    - get the flag : 3321b6f81659f9a71c76616f606e4b50189cecfea611393d5d649f75e157353c
