@@ -1,4 +1,4 @@
-# rainfall# 🌧️ Rainfall – Projet d’Exploitation Binaire (École 42)
+# 🌧️ Rainfall – Projet d’Exploitation Binaire (École 42)
 
 Projet de groupe réalisé avec [Malo Lefort](https://github.com/Malolfrt)
 
